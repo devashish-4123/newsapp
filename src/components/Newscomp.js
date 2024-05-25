@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
+import PropTypes from 'prop-types'
+
+
 
 export class Newscomp extends Component {
     articles = [
@@ -323,6 +326,19 @@ export class Newscomp extends Component {
         },
     ];
 
+    static deafultProps = {
+        country :"in",
+        pageSize: 8,
+        category: "general"
+
+    }
+
+    static propTypes = {
+        country: PropTypes.string,
+        pageSize: PropTypes.number,
+        category: PropTypes.string,
+    }
+
     constructor() {
         super();
         console.log("Hello I am a constructor from news component");
@@ -336,7 +352,7 @@ export class Newscomp extends Component {
     //used for fetch the articles from the news api , fetching is done and in parsedData contains all info from newsapi and passed this info into articlesf
     async componentDidMount() {
         let fetchurl =
-            `https://newsapi.org/v2/top-headlines?country=in&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&pageSize=${this.props.pageSize}`;
+            `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&pageSize=${this.props.pageSize}`;
         this.setState({loading:true})    
         let data = await fetch(fetchurl);
         let parsedData = await data.json();
@@ -349,7 +365,7 @@ export class Newscomp extends Component {
 
     handleNextClick = async () => {
         console.log("this is next");
-        let fetchurl = `https://newsapi.org/v2/top-headlines?country=in&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+        let fetchurl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}in&category=${this.props.category}&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         this.setState({loading:true})
         let data = await fetch(fetchurl);
         let parsedData = await data.json();
@@ -363,7 +379,7 @@ export class Newscomp extends Component {
 
     handlePreviousClick = async () => {
         console.log("this is previous");
-            let fetchurl = `https://newsapi.org/v2/top-headlines?country=in&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&page=${this.state.page - 1
+            let fetchurl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&page=${this.state.page - 1
                 }&pageSize=${this.props.pageSize}`;
                 this.setState({loading:true})
             let data = await fetch(fetchurl);
