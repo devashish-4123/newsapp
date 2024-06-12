@@ -365,7 +365,7 @@ export class Newscomp extends Component {
 
     handleNextClick = async () => {
         console.log("this is next");
-        let fetchurl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}in&category=${this.props.category}&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
+        let fetchurl = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=b2e86bea2f354750b4dd73eaf50b28b0&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
         this.setState({loading:true})
         let data = await fetch(fetchurl);
         let parsedData = await data.json();
@@ -395,7 +395,7 @@ export class Newscomp extends Component {
     render() {
         return (
             <div className="container my-3 " >
-                <h2 className="text-center">NewsMind - Top Headlines</h2>
+                <h2 className="text-center">NewsMind - Top Headlines </h2>
                 {this.state.loading && <Spinner/>}
                 <div className="row my-5">
                     {/* {this.state.articles.map((element)=>console.log(element))}                   example of how to use the element like article in the state */}
@@ -410,6 +410,10 @@ export class Newscomp extends Component {
                                     }
                                     imgUrl={element.urlToImage}
                                     newsurl={element.url}
+                                    author={element.author}
+                                    date={element.publishedAt}
+                                    source={element.source.name}
+                                   
                                 />
                             </div>
                         ); // articles is maped and the elements in the artice is shown as NewsItem , for that we have to find unique thing in article which is "url" , therefore we set the url as key
